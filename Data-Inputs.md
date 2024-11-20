@@ -1,5 +1,5 @@
 <h2><u>Data Inputs</u></h2>
-### Workstations
+### Workstations ###
 **What data SPECIFICALLY are we interested in?**
 
 - **Exclude**: 
@@ -13,4 +13,6 @@
     - Setup logs
     - Directory Service logs
     - Windows PowerShell logs
-Syslog, netflow?
+
+**Volume: Estimate daily ingestion volume**
+
