@@ -16,3 +16,5 @@
 
 **Volume: Estimate daily ingestion volume**
 
+<h2><u>Routing Architectures</u></h2>
+<h1>Direct Forwarding</h1>
