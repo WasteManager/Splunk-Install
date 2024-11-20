@@ -17,5 +17,5 @@ Workstations
 
 **Volume: Estimate daily ingestion volume**
 
-<h2><u>Routing Architectures</u></h2>
-<h1>Direct Forwarding</h1>
+<h1><u>Routing Architectures</u></h2>
+<h2>Direct Forwarding</h1>
