@@ -13,6 +13,7 @@
     - Setup logs
     - Directory Service logs
     - Windows PowerShell logs
+  - DHCP Events
 
 **Volume: Estimate daily ingestion volume**
 
