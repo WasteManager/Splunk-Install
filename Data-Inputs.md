@@ -3,7 +3,7 @@ Workstations
   - What data SPECIFICALLY are we interested in?
 
 - **Exclude**: 
-  - NO perfmon
+  - perfmon
 
 - **Include**:
   - **Windows Event Logs**:
