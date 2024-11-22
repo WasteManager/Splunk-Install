@@ -29,3 +29,25 @@ The benefits of this topology include:
 The limitation of this topology is the **lack of disaster recovery (DR) capability** if a site outage occurs.
 
 To ensure the best experience, see [Splunk Enterprise service limits and constraints](https://docs.splunk.com/Documentation/Splunk/latest/Capacity/ReferenceHardware) in the Splunk Enterprise Capacity Planning manual.
+
+# Backend Configurations
+- Linux backend
+- RHel 9
+- STIGs?
+- Hosted on-prem?
+- Hardware requirements?
+    - Search Heads
+        - vCPU's - 8
+        - RAM -32 GiB
+        - OS disk -32GiB
+        - Data Disks: 2- 512GiB
+    - Indexers
+        - vCPU's - 16
+        - RAM - 64GiB
+        - OS disk -32GiB
+        - Data Disks: 3 -30000 GiB
+    - Cluster Manager
+        - vCPU's - 4
+        - OS disk -32GiB
+        - RAM - 16 GiB
+        - Data Disks: 2 -4096 GiB
