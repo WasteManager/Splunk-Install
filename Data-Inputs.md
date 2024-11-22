@@ -29,7 +29,7 @@ In the most direct scenario, each **Universal Forwarder (UF)** sends data direct
 - Minimal complexity.
 - Indexing is optimized to handle many connections, with forwarders balancing over time.
 - Fastest time to index with the lowest number of hops.
-- Proxy-compatible using `httpout` (S2S encapsulated in HTTP).
+- Proxy-compatible using `httpout` (S2S[Splunk 2 Splunk] encapsulated in HTTP).
 
 ---
 
