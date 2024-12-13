@@ -24,6 +24,61 @@ The benefits of this topology include:
 - **Optimal user failover** if a search head fails.
 
 ---
+# Splunk Components and Their Roles
+
+## Indexers
+- **Purpose:** Store and process incoming data to make it searchable.
+- **Role:**
+  - Parse, index, and store the data received from forwarders or other data sources.
+  - Create and manage indexes (logical data repositories) and ensure efficient storage.
+  - Serve search requests from search heads by retrieving relevant indexed data.
+  - Can be organized into clusters for data replication and high availability.
+
+## Search Heads
+- **Purpose:** Provide an interface for users to search and visualize data.
+- **Role:**
+  - Accept search queries from users and distribute them to indexers.
+  - Aggregate and display search results in dashboards, reports, and alerts.
+  - Enable collaboration and sharing of knowledge objects (e.g., saved searches, dashboards).
+  - Can be organized into search head clusters for load balancing and redundancy.
+
+## Cluster Managers
+- **Purpose:** Manage indexer clusters for replication and high availability.
+- **Role:**
+  - Enforce replication and search factor settings in the indexer cluster.
+  - Ensure data integrity and redundancy by replicating data across indexers.
+  - Monitor the health of the indexer cluster and facilitate failover in case of node failures.
+  - Act as the central authority for indexer cluster configuration.
+
+## License Manager
+- **Purpose:** Enforce compliance with Splunk's licensing model.
+- **Role:**
+  - Track daily indexing volume across the deployment to ensure it stays within the licensed capacity.
+  - Provide reports and alerts if the license volume limit is exceeded.
+  - Serve as the central repository for managing Splunk license keys.
+  - Issue warnings and prevent searches if licensing violations are not addressed.
+
+## Deployer
+- **Purpose:** Manage and distribute configuration updates to search head clusters.
+- **Role:**
+  - Push configuration bundles (apps, settings, configurations) to search head cluster members.
+  - Simplify the process of maintaining consistency across search head nodes.
+  - Ensure that all cluster members are in sync with the latest configurations.
+
+## Deployment Server
+- **Purpose:** Centralize configuration management for forwarders and standalone Splunk components.
+- **Role:**
+  - Push configuration updates (inputs, outputs, apps) to universal and heavy forwarders.
+  - Enable simplified management of large-scale forwarder deployments.
+  - Ensure consistent data collection settings across the deployment.
+
+## Monitoring Console (MC)
+- **Purpose:** Provide insights into the health and performance of the Splunk deployment.
+- **Role:**
+  - Monitor the performance of all Splunk components (e.g., indexers, search heads, forwarders).
+  - Generate dashboards and alerts for resource utilization, search performance, and indexing rates.
+  - Help diagnose issues such as resource bottlenecks, dropped data, or search delays.
+  - Can be run on a standalone node or within an existing Splunk component (e.g., a search head).
 
 # Limitations
 The limitation of this topology is the **lack of disaster recovery (DR) capability** if a site outage occurs.
