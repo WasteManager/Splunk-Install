@@ -1,3 +1,10 @@
-chmod 644 splunk.___rpm
-chmod +x splunk.___rpm
-rpm -i splunk._____rpm
+  - chmod 644 splunk.___rpm
+  - chmod +x splunk.___rpm
+  - rpm -i splunk._____rpm
+  - /opt/splunk/bin/splunk start --accept-license --answer-yes
+  - DO NOT RUN SPLUNK AS ROOT
+  - enable splunk to start at reboot (must be set up as root)
+  - chown -R splunk:splunk /opt/splunk
+  - /opt/splunk/bin/splunk stop
+  - ./splunk enable boot-start -systemd-managed 1 -user splunk
+  - if PID is not dead then kill -9 #PID
