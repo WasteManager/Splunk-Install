@@ -27,6 +27,7 @@
   - cd /opt/splunk/bin
   - ./splunk enable boot-start -systemd-managed 1 -user splunk
   - # Enable correct ports
+  - ensure ports are open (in powershell tnc -p 8000 #target ip address)
   - sudo -s
   - firewall-cmd --zone=public --add-port=8000/tcp --permanent
   - firewall-cmd --zone=public --add-port=8089/tcp --permanent (or use ^8000^8089)
