@@ -20,11 +20,12 @@
   - chmod +x splunk-___.rpm
   - sudo -s
   - rpm -i splunk-___.rpm
-  - su - splunk
+  - su - splunk (turn splunk on and off as splunk user)
   - cd /opt/splunk/bin
   - ./splunk start --accept-license --answer-yes
+      -   - Will be prompted to create a local admin account: use admin and easy to remember password(update keepass!!)
   - ./splunk stop
-  - exit
+  - exit (go back to root user)
   - cd /opt/splunk/bin
   - ./splunk enable boot-start -systemd-managed 1 -user splunk
   - # Enable correct ports
