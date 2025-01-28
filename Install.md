@@ -28,6 +28,7 @@
   - exit (go back to root user)
   - cd /opt/splunk/bin
   - ./splunk enable boot-start -systemd-managed 1 -user splunk
+  - systemctl start Splunkd
   - # Enable correct ports
   - ensure ports are open (in powershell tnc -p 8000 #target ip address)
   - sudo -s
