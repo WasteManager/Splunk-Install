@@ -5,6 +5,7 @@
   - (May get an error useradd: cannot create directory /opt/splunk -> check to see if /opt/splunk IS created
   - su - splunk
   - /opt/splunk/bin/splunk start --accept-license --answer-yes
+        - Will be prompted to create a local admin account: use admin and easy to remember password(update keepass!!)
   - DO NOT RUN SPLUNK AS ROOT
   - enable splunk to start at reboot (must be set up as root)
   - chown -R splunk:splunk /opt/splunk (if perms do not add up)
