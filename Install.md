@@ -26,3 +26,10 @@
   - exit
   - cd /opt/splunk/bin
   - ./splunk enable boot-start -systemd-managed 1 -user splunk
+  - # Enable correct ports
+  - sudo -s
+  - firewall-cmd --zone=public --add-port=8000/tcp --permanent
+  - firewall-cmd --zone=public --add-port=8089/tcp --permanent (or use ^8000^8089)
+  - firewall-cmd --zone=public --add-port=9997/tcp --permanent (or use ^8089^9997)
+  - firewall-cmd --zone=public --add-port=8191/tcp --permanent (critical for kvstore[where clusterd knowledged objects to replicated too])
+  - firewall-cmd --reload #rereads to make what a change, (puts things in effect)
