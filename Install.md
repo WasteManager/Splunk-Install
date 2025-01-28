@@ -17,8 +17,8 @@
   - Use winscp to move splunk rpm to splunk machine
   - chmod 644 splunk-___.rpm
   - chmod +x splunk-___.rpm
-  - rpm -i splunk-___.rpm
   - sudo -s
+  - rpm -i splunk-___.rpm
   - su - splunk
   - cd /opt/splunk/bin
   - ./splunk start --accept-license --answer-yes
