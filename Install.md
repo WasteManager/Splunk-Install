@@ -1,10 +1,28 @@
   - chmod 644 splunk.___rpm
   - chmod +x splunk.___rpm
+  - sudo -s
   - rpm -i splunk._____rpm
+  - (May get an error useradd: cannot create directory /opt/splunk -> check to see if /opt/splunk IS created
+  - su - splunk
   - /opt/splunk/bin/splunk start --accept-license --answer-yes
   - DO NOT RUN SPLUNK AS ROOT
   - enable splunk to start at reboot (must be set up as root)
-  - chown -R splunk:splunk /opt/splunk
+  - chown -R splunk:splunk /opt/splunk (if perms do not add up)
   - /opt/splunk/bin/splunk stop
-  - ./splunk enable boot-start -systemd-managed 1 -user splunk
+  - ./splunk enable boot-start -systemd-managed 1 -user splunk #(must be root)
   - if PID is not dead then kill -9 #PID
+
+# Best case run
+  - turn on machine
+  - Use winscp to move splunk rpm to splunk machine
+  - chmod 644 splunk-___.rpm
+  - chmod +x splunk-___.rpm
+  - rpm -i splunk-___.rpm
+  - sudo -s
+  - su - splunk
+  - cd /opt/splunk/bin
+  - ./splunk start --accept-license --answer-yes
+  - ./splunk stop
+  - exit
+  - cd /opt/splunk/bin
+  - ./splunk enable boot-start -systemd-managed 1 -user splunk
