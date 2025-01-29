@@ -24,6 +24,7 @@
   - cd /opt/splunk/bin
   - ./splunk start --accept-license --answer-yes
       -   - Will be prompted to create a local admin account: use admin and easy to remember password(update keepass!!)
+          - GO UPDATE THE KEEPASS
   - ./splunk stop
   - exit (go back to root user)
   - cd /opt/splunk/bin
