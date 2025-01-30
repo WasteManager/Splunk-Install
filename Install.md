@@ -38,3 +38,17 @@
   - firewall-cmd --zone=public --add-port=9997/tcp --permanent (or use ^8089^9997)
   - firewall-cmd --zone=public --add-port=8191/tcp --permanent (critical for kvstore[where clusterd knowledged objects to replicated too])
   - firewall-cmd --reload #rereads to make what a change, (puts things in effect)
+
+  # Set up Cluster Manager
+  - Log into cluster master machine backend
+  - Move base config file (this is tribal knowledge) to /tmp (using CDS)
+  - move into /tmp
+  - change ownership: chown -R splunk:splunk base_config_file_manager_base
+  - change name if desired to something unique ie: J_base_config_file_manager_base
+  - cd to /opt/splunk/etc/apps/j_base_config_file_manager_base/local
+  - vi server.conf
+  - under [clustering] ensure mode is manager, replication factor is whatever is defined, and search factor is whatever is defined
+  - change the pass4symkey (once enterered it will be encrypted) -> enter in keepass
+  - mv the file under /opt/splunk/etc/apps
+  - login into web UI
+  - under clustering:manager node, ensure there are no peers configured
