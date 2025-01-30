@@ -52,3 +52,14 @@
   - mv the file under /opt/splunk/etc/apps
   - login into web UI
   - under clustering:manager node, ensure there are no peers configured
+
+  - # set volumes on indexers
+  - 
+
+  - # Join indexer to Cluster (Peering)
+  - use base config: org_cluster_indexer_base
+  - go down to /opt/splunk/etc/system/local
+  - edit [clustering] stanza
+  - manager_uri = IP address of cluster manager:8089
+  - mode=peer
+  - pass4symm = the pass4sym established by the cluster manager
