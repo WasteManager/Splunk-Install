@@ -54,7 +54,8 @@
   - under clustering:manager node, ensure there are no peers configured
 
   - # set volumes on indexers
-  - 
+-  winscp base config files: org_cluster_indexer_base, org_indexer_volume_indexes to the /tmp file on the indexer
+  -  rename each to desired name ie: j_cluster_indexer_base, and j_indexer_volume_indexes : :mv org_cluster_indexer_base j_cluster_indexer_base"
 
   - # Join indexer to Cluster (Peering)
   - use base config: org_cluster_indexer_base
