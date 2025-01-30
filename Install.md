@@ -71,3 +71,9 @@
   - manager_uri = IP address of cluster manager:8089
   - mode=peer
   - pass4symm = the pass4sym established by the cluster manager
+  - # Cluster Manager Base configs
+  - winscp cluster_manager_base and org_all_indexes to server
+  - change ownership and rename to something appropiate
+  - in org_all_indexes inside of indexes.conf change homepath to volume:hot/xindex/db # this needs to be done globally. theres a shortcut to do this in vi (enter that here) (do I need to change the coldpath to volume:cold?)
+  - move org_all_indexes to manager-apps. ie: mv org_all_indexes
+  - in cluster_manager_base, traverse down into server.conf. in the [clustering] stanza ensure mode = manager, replication factor =3 and search factor =2 (this is deployment dependent). define pass4symmkey here. (update keepass)
