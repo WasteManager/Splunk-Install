@@ -53,9 +53,16 @@
   - login into web UI
   - under clustering:manager node, ensure there are no peers configured
 
-  - # set volumes on indexers
+  - # set volumes on indexers (base configs)
 -  winscp base config files: org_cluster_indexer_base, org_indexer_volume_indexes to the /tmp file on the indexer
   -  rename each to desired name ie: j_cluster_indexer_base, and j_indexer_volume_indexes : :mv org_cluster_indexer_base j_cluster_indexer_base"
+  -  change ownership : chown -R splunk:splunk j_cluster_indexer_base, and j_indexer_volume_indexes
+  -  in cluster_indexer_base you must change some configs in some files. Drill down into local
+  -  leave app.conf,inputs.conf(for now) and indexes.conf alone
+  -  in server.conf: in the [clustering] stanza, change manager uri to the ip address and port of cluster manager ie: manager_uri = https://12:213:123:12:8089, add the same pass4symmkey from cluster manager in as well. Change replication_port to ://9100. in the [license] stanza change the manager_uri to the ip address the license manager ip. ie: manager_uri = https://34:232:235:98:8089
+  -  in web.conf under the [settings] stanza change startwebserver = true. For the time being. You will turn this back false later in the build.
+  -  in _indexer_volume_indexes you must also change data in indexes.conf
+  -  change to [volume:hot], path =/ hot #or whatever the hot directory is called change the maxVolumeDataSizeMB to the hot volume size. You must add a [volume:cold], define path to path = /cold, change the maxVolumeDataSizeMB to the cold volume size
 
   - # Join indexer to Cluster (Peering)
   - use base config: org_cluster_indexer_base
