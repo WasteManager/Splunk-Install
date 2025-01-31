@@ -1,16 +1,10 @@
-  - chmod 644 splunk.___rpm
-  - chmod +x splunk.___rpm
-  - sudo -s
-  - rpm -i splunk._____rpm
+# Misc Install notes
+  -  when rpm -i splunk._____rpm
   - (May get an error useradd: cannot create directory /opt/splunk -> check to see if /opt/splunk IS created
-  - su - splunk
-  - /opt/splunk/bin/splunk start --accept-license --answer-yes
-        - Will be prompted to create a local admin account: use admin and easy to remember password(update keepass!!)
+  - su - splunk (switch user to splunk user)
   - DO NOT RUN SPLUNK AS ROOT
   - enable splunk to start at reboot (must be set up as root)
   - chown -R splunk:splunk /opt/splunk (if perms do not add up)
-  - /opt/splunk/bin/splunk stop
-  - ./splunk enable boot-start -systemd-managed 1 -user splunk #(must be root)
   - if PID is not dead then kill -9 #PID
 
 # Best case run
