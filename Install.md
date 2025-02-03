@@ -7,6 +7,7 @@
   - chown -R splunk:splunk /opt/splunk (if perms do not add up)
   - if PID is not dead then kill -9 #PID
   - 8089 is default management port for splunk
+  - ss -plnt # check listening ports
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
@@ -77,7 +78,12 @@
   # Change deployment server with base config
   - find base config _org_full_license_server -> push to deployment server in /opt/splunk/etc/deployment-apps (check ownership)
   - change the server.conf server to show license manager URI
-  # Put org_all_deploymentclient on license manager, cluster manager, and search head deployer
+
+  # Put org_all_deploymentclient base config on license manager, cluster manager, and search head deployer
    - move to opt/splunk/etc/apps (remember to check ownership
    - put in FQDN or IP address into targetUri (deployment server) under [target-broker:deploymentServer]
+
+  # move org_full_license_server base config to cluster manager and deployer to /etc/apps
+    - change ownership 
+    edit server.conf file to add in license manager IP and port
      
