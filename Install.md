@@ -6,7 +6,7 @@
   - enable splunk to start at reboot (must be set up as root)
   - chown -R splunk:splunk /opt/splunk (if perms do not add up)
   - if PID is not dead then kill -9 #PID
-
+  - 8089 is default management port for splunk
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
@@ -72,3 +72,11 @@
   - in org_all_indexes inside of indexes.conf change homepath to volume:hot/xindex/db # this needs to be done globally. theres a shortcut to do this in vi (enter that here) (do I need to change the coldpath to volume:cold?)
   - move org_all_indexes to manager-apps. ie: mv org_all_indexes
   - in cluster_manager_base, traverse down into server.conf. in the [clustering] stanza ensure mode = manager, replication factor =3 and search factor =2 (this is deployment dependent). define pass4symmkey here. (update keepass)
+
+  # Change deployment server with base config
+  - find base config _org_full_license_server -> push to deployment server in /opt/splunk/etc/deployment-apps (check ownership)
+  - change the server.conf server to show license manager URI
+  # Put org_all_deploymentclient on license manager, cluster manager, and search head deployer
+   - move to opt/splunk/etc/apps (remember to check ownership
+   - put in FQDN or IP address into targetUri (deployment server) under [target-broker:deploymentServer]
+     
