@@ -8,6 +8,8 @@
   - if PID is not dead then kill -9 #PID
   - 8089 is default management port for splunk
   - ss -plnt # check listening ports
+  - deployer only pushes apps down to forwarders
+  - cluster manager does the data management
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
@@ -61,14 +63,14 @@
   -  in _indexer_volume_indexes you must also change data in indexes.conf
   -  change to [volume:hot], path =/ hot #or whatever the hot directory is called change the maxVolumeDataSizeMB to the hot volume size. You must add a [volume:cold], define path to path = /cold, change the maxVolumeDataSizeMB to the cold volume size
 
-  - # Join indexer to Cluster (Peering)
+  # Join indexer to Cluster (Peering)
   - use base config: org_cluster_indexer_base
   - go down to /opt/splunk/etc/system/local
   - edit [clustering] stanza
   - manager_uri = IP address of cluster manager:8089
   - mode=peer
   - pass4symm = the pass4sym established by the cluster manager
-  - # Cluster Manager Base configs
+  # Cluster Manager Base configs
   - winscp cluster_manager_base and org_all_indexes to server
   - change ownership and rename to something appropiate
   - in org_all_indexes inside of indexes.conf change homepath to volume:hot/xindex/db # this needs to be done globally. theres a shortcut to do this in vi (enter that here) (do I need to change the coldpath to volume:cold?)
@@ -86,4 +88,8 @@
   # move org_full_license_server base config to cluster manager and deployer to /etc/apps
     - change ownership 
     edit server.conf file to add in license manager IP and port
-     
+  # move base configs related to search heads and search head clustering to indexers (forward output to indexers, and join to cluster. This is done on all search heads
+    - org_all_forwarder_outputs, org_search_volume_indexes (possibly org_cluster_search_base)
+    - move the above base configs to /opt/splunk/etc/apps
+    - edit org_all_forwarder_outputs: add indexer ip's and replication ports(9997)
+    - edit org_search_volume_indexes, vi indexes.conf, and change volumes to appropiate (ie:hot /hot, cold /cold)
