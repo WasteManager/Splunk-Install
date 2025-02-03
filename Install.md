@@ -10,6 +10,7 @@
   - ss -plnt # check listening ports
   - deployer only pushes apps down to forwarders
   - cluster manager does the data management
+  - ./splunk show shcluster-status (shows if searchhead cluster is up, shows which is captain)
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
@@ -93,3 +94,33 @@
     - move the above base configs to /opt/splunk/etc/apps
     - edit org_all_forwarder_outputs: add indexer ip's and replication ports(9997)
     - edit org_search_volume_indexes, vi indexes.conf, and change volumes to appropiate (ie:hot /hot, cold /cold)
+  # joining search head members into the cluster
+    - change to user splunk su splunk
+    - move to /opt/splunk/bin
+    - ./splunk init schluster-config -mgmt_uri https://ipofcurrentsearchhead -replication_port 9200 -replication_factor 2 -conf_deploy_fetch_url https://ipofDeployer:8089 -secret makeThisSameAsPass4SymmKey -schcluster_label makeThisWhateverYouWantClusterToBeNamed\
+    - give admin creds
+    - systemctl restart Splunkd
+    - repeat on the rest of the search heads, remember to change the mgmt_uri
+    - once finished, identify the captain (searchhead01)
+    - change to splunk user (su splunk)
+    - change to /opt/splunk/bin
+    - ./splunk bootstrap schclsuter-captain -servers_list "https://ipOfEachSearchHeadInCluster:8089, https://ipofsearchHead:8089, https://ipOfSearchHead:8089"
+    - enter admin creds
+# add search heads to recognize the index cluster manager for access to the indexers (done on search heads)
+  - go through the search heads and do the following (DO NOT RESTART BETWEEN CONFIG EDITS)
+  - /opt/splunk/bin
+  - ./splunk edit cluster-config -mode searchhead -master_uri https://ipOfClusterManager:8089 -secret secretidentifiedearlier
+  - manuever to search head captain
+  - conduct rolling restart /opt/splunk/bin/splunk rolling-restart shcluster-members
+# Go to Deployer ensure searchhead cluster password in contained
+  - move org_cluster_search_base to deployer through winscp (put it in /tmp then move over to /opt/splunk/etc/apps)
+  - ensure that ownership is correct
+  - drill down into server.conf and edit it
+  - under[clustering] delete everything after clustermanager:one
+  - under [clustermanager:one] change manager_uri=ipOfClusterManager:8089, change pass4symmkey to cluster managers pass4symmkey, comment outeverything in clustermanager:two
+  - restart Splunkd
+# Check KVstore status on search heads
+  -  change user to splunk
+  -  move to /opt/splunk/bin
+  -  ./splunk show kvstore-status
+  -  kvstore MUST have status as ready
