@@ -124,3 +124,5 @@
   -  move to /opt/splunk/bin
   -  ./splunk show kvstore-status
   -  kvstore MUST have status as ready
+
+lk
