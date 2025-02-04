@@ -12,6 +12,7 @@
   - cluster manager does the data management
   - ./splunk show shcluster-status (shows if searchhead cluster is up, shows which is captain)
   - to uninstall splunk on rhel: yum remove splunk (ensure that /opt/splunk is removed, if not rm -rf /splunk
+  - org_all_deployment_client default phone home time is 600 seconds(will be changed after universal forwarders are enabled) may take about 10 minutes for the client to show up on the deployment server
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
@@ -85,7 +86,7 @@
   - change the server.conf server to show license manager URI
 
   # Put org_all_deploymentclient base config on license manager, cluster manager, and search head deployer
-   - move to opt/splunk/etc/apps (remember to check ownership
+   - move to opt/splunk/etc/apps (remember to check ownership deploymentclient.conf
    - put in FQDN or IP address into targetUri (deployment server) under [target-broker:deploymentServer]
 
   # move org_full_license_server base config to cluster manager and deployer to /etc/apps
@@ -99,14 +100,14 @@
   # joining search head members into the cluster
     - change to user splunk su splunk
     - move to /opt/splunk/bin
-    - ./splunk init schluster-config -mgmt_uri https://ipofcurrentsearchhead -replication_port 9200 -replication_factor 2 -conf_deploy_fetch_url https://ipofDeployer:8089 -secret makeThisSameAsPass4SymmKey -schcluster_label makeThisWhateverYouWantClusterToBeNamed\
+    - ./splunk init shcluster-config -mgmt_uri https://ipofcurrentsearchhead -replication_port 9200 -replication_factor 2 -conf_deploy_fetch_url https://ipofDeployer:8089 -secret makeThisSameAsPass4SymmKey -schcluster_label makeThisWhateverYouWantClusterToBeNamed\
     - give admin creds
     - systemctl restart Splunkd
     - repeat on the rest of the search heads, remember to change the mgmt_uri
     - once finished, identify the captain (searchhead01)
     - change to splunk user (su splunk)
     - change to /opt/splunk/bin
-    - ./splunk bootstrap schclsuter-captain -servers_list "https://ipOfEachSearchHeadInCluster:8089, https://ipofsearchHead:8089, https://ipOfSearchHead:8089"
+    - ./splunk bootstrap shcluster-captain -servers_list "https://ipOfEachSearchHeadInCluster:8089, https://ipofsearchHead:8089, https://ipOfSearchHead:8089"
     - enter admin creds
 # add search heads to recognize the index cluster manager for access to the indexers (done on search heads)
   - go through the search heads and do the following (DO NOT RESTART BETWEEN CONFIG EDITS)
@@ -136,7 +137,14 @@
 # Base Configs needed per Server
 - Deployment Server: org_all_forwarder_outputs, org_cluster_search_base, org_full_license_server -> into /opt/splunk/etc/apps
 - License Manager: org_all_deployment_client, org_all_forwarder_outputs -> opt/splunk/etc/apps
-- Deployer: org_all_forwarder_outputs -> /opt/splunk/etc/apps, org_full_license_server -> /opt/splunk/etc/deployment-apps
+- Deployer: org_all_forwarder_outputs -> org_all_deployment_client, /opt/splunk/etc/apps, org_full_license_server -> /opt/splunk/etc/deployment-apps
 - cluster manager: org_all_deployment_client, org_all_forwarder_outputs, org_full_license_server, j_cluster_manager_base -> /opt/splunk/etc/apps
 - indexers: j_cluster_indexer_base, j_indexer_volume_indexes -> /opt/splunk/etc/apps
 - search heads: org_all_forwarder_outputs, org_search_volume_indexes -> /opt/splunk/etc/apps
+
+# Base config tidbits
+- org_indexer_volume_indexes :defines hot and cold paths. use ls -l /hot to ensure buckets are filling and are replicating
+- org_cluster_indexer_base: defines pass4symm key to talk to cluster manager, and defines where the license manager lives
+- org_all_deployment_client: ensures whatever machine this is put on connects to deployment server
+- 
+sd
