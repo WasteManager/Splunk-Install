@@ -11,6 +11,7 @@
   - deployer only pushes apps down to forwarders
   - cluster manager does the data management
   - ./splunk show shcluster-status (shows if searchhead cluster is up, shows which is captain)
+  - to uninstall splunk on rhel: yum remove splunk (ensure that /opt/splunk is removed, if not rm -rf /splunk
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
@@ -131,3 +132,11 @@
   - dig into /etc/haproxy
   - vi haproxy.cg
   - edit main frontend which proxys to the backends
+
+# Base Configs needed per Server
+- Deployment Server: org_all_forwarder_outputs, org_cluster_search_base, org_full_license_server -> into /opt/splunk/etc/apps
+- License Manager: org_all_deployment_client, org_all_forwarder_outputs -> opt/splunk/etc/apps
+- Deployer: org_all_forwarder_outputs -> /opt/splunk/etc/apps, org_full_license_server -> /opt/splunk/etc/deployment-apps
+- cluster manager: org_all_deployment_client, org_all_forwarder_outputs, org_full_license_server, j_cluster_manager_base -> /opt/splunk/etc/apps
+- indexers: j_cluster_indexer_base, j_indexer_volume_indexes -> /opt/splunk/etc/apps
+- search heads: org_all_forwarder_outputs, org_search_volume_indexes -> /opt/splunk/etc/apps
