@@ -28,6 +28,7 @@
   - cd /opt/splunk/bin
   - ./splunk enable boot-start -systemd-managed 1 -user splunk
   - systemctl start Splunkd
+  - when specifying installs for, /cold partiton is only needed for indexers
   - # Enable correct ports
   - ensure ports are open (in powershell tnc -p 8000 #target ip address)
   - sudo -s
@@ -124,5 +125,9 @@
   -  move to /opt/splunk/bin
   -  ./splunk show kvstore-status
   -  kvstore MUST have status as ready
-
-lk
+# Configure load balancer
+  - login as root
+  - install HA proxy
+  - dig into /etc/haproxy
+  - vi haproxy.cg
+  - edit main frontend which proxys to the backends
