@@ -162,3 +162,9 @@
 # add things on deployment server that need to be pushed out to non clustered splunk servers (cluster manager, license manager, deployer)
 # Check ulimits on each server
 # check again that transparent huge pages were disabled on all spl servers
+# Deployment server 
+- in opt/splunk/apps/splunkdeploymentserverconfig, create local dir, cp outputs.conf into new local dir, edit it to indexandforward
+# certs on the search head
+# LDAP single sign on
+# Forwarders deployed
+# work on load balancer 1st to work on regarding certs
