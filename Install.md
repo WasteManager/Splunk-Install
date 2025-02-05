@@ -13,6 +13,9 @@
   - ./splunk show shcluster-status (shows if searchhead cluster is up, shows which is captain)
   - to uninstall splunk on rhel: yum remove splunk (ensure that /opt/splunk is removed, if not rm -rf /splunk
   - org_all_deployment_client default phone home time is 600 seconds(will be changed after universal forwarders are enabled) may take about 10 minutes for the client to show up on the deployment server
+  - as splunk: ./splunk clean kvstore --local #clean kvstore
+  - ./splunk show kvstore-status #show kvstore status
+  - check logs: move to /opt/splunk/var/log -> tail -f splunkd.log
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
@@ -88,6 +91,7 @@
   # Put org_all_deploymentclient base config on license manager, cluster manager, and search head deployer
    - move to opt/splunk/etc/apps (remember to check ownership deploymentclient.conf
    - put in FQDN or IP address into targetUri (deployment server) under [target-broker:deploymentServer]
+   - uncomment out phone home line
 
   # move org_full_license_server base config to cluster manager and deployer to /etc/apps
     - change ownership 
@@ -137,7 +141,7 @@
 # Base Configs needed per Server
 - Deployment Server: org_all_forwarder_outputs, org_cluster_search_base, org_full_license_server -> into /opt/splunk/etc/apps
 - License Manager: org_all_deployment_client, org_all_forwarder_outputs -> opt/splunk/etc/apps
-- Deployer: org_all_forwarder_outputs -> org_all_deployment_client, /opt/splunk/etc/apps, org_full_license_server -> /opt/splunk/etc/deployment-apps
+- Deployer: org_all_forwarder_outputs -> org_all_deployment_client -> /opt/splunk/etc/apps, org_full_license_server -> /opt/splunk/etc/deployment-apps
 - cluster manager: org_all_deployment_client, org_all_forwarder_outputs, org_full_license_server, j_cluster_manager_base -> /opt/splunk/etc/apps
 - indexers: j_cluster_indexer_base, j_indexer_volume_indexes -> /opt/splunk/etc/apps
 - search heads: org_all_forwarder_outputs, org_search_volume_indexes -> /opt/splunk/etc/apps
@@ -147,4 +151,14 @@
 - org_cluster_indexer_base: defines pass4symm key to talk to cluster manager, and defines where the license manager lives
 - org_all_deployment_client: ensures whatever machine this is put on connects to deployment server
 - 
-sd
+# On Search Head Cluster Deployer
+- under /opt/splunk/etc/system/local
+- vi server.conf
+- ensure [shclustering] stanza exists, if not create it
+- under the stanza add pass4SymmKey = whateverthesearchheadclusterpasswordwas
+- :wq
+- restart
+- There is a base config with that stanza, org_cluster_search_base (alternativey you can move this into apps, and edit like above)
+# add things on deployment server that need to be pushed out to non clustered splunk servers (cluster manager, license manager, deployer)
+# Check ulimits on each server
+# check again that transparent huge pages were disabled on all spl servers
