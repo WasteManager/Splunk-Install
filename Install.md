@@ -16,6 +16,10 @@
   - as splunk: ./splunk clean kvstore --local #clean kvstore
   - ./splunk show kvstore-status #show kvstore status
   - check logs: move to /opt/splunk/var/log -> tail -f splunkd.log
+  - apps like TA-windows will be deployed from the deployment server(depser)
+  - in deployment server, under forwarder management, all hosts will appear under the clients tab
+  - never edit apps from GUI, always edit from command line. But you can add server_classes
+  - change phone home to something like an hour after all your forwarders are pushed out (in the deployment server[depser]) go to deployment_apps under deploymentclient.conf
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
