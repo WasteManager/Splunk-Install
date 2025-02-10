@@ -21,6 +21,7 @@
   - never edit apps from GUI, always edit from command line. But you can add server_classes
   - change phone home to something like an hour after all your forwarders are pushed out (in the deployment server[depser]) go to deployment_apps under deploymentclient.conf
   - TO generate csr do the following command: openssl req SERVER.csr -newkey rsa:2048 -nodes -keyout SERVER.key san.cnf
+  - shcluster/apps in deploymon(deployer) is the location you want to put apps you want to push out to search head cluster members
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
@@ -170,6 +171,7 @@
 # Deployment server 
 - in opt/splunk/apps/splunkdeploymentserverconfig, create local dir, cp outputs.conf into new local dir, edit it to indexandforward
 # certs on the search head
+# set up monitoring console
 # LDAP single sign on
 # Forwarders deployed
 # work on load balancer 1st to work on regarding certs
