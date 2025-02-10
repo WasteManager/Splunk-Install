@@ -30,6 +30,8 @@
   -  to move files from one server to another from cmd line: scp -r filname splunkadmin(the servers admin account)@ipaddress:/(location where you want it sent). ie: scp -r frogfile.config splunkadmin@22.9.123.43:/tmp
   -  creating a new serverclass will push app changes out to search heads, if not you can manually push it using this cmd: splunk reload deploy-server
   -  on deployment
+  -  to remove an app from an deployment use the gui in deployment server. unselect, save.
+  -  
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
@@ -201,4 +203,6 @@
 service-worldview
 # all servers that are not a license manager gets a new app called org_all_license_servers
 
-# need props of search heads
+# configure forwarder to use splunks generated certs on the forwarders via overwriting the outputs.conf(this can be found in a custom "app" created in the GUI on the deployment server)
+
+# need props.conf on the deployer to push out to search heads
