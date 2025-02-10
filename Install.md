@@ -200,9 +200,8 @@
 # Forwarders deployed
 # work on load balancer 1st to work on regarding certs
 
-service-worldview
 # all servers that are not a license manager gets a new app called org_all_license_servers
 
 # configure forwarder to use splunks generated certs on the forwarders via overwriting the outputs.conf(this can be found in a custom "app" created in the GUI on the deployment server)
-
+# the indexer lookups error disappeared
 # need props.conf on the deployer to push out to search heads
