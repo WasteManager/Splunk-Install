@@ -1,6 +1,6 @@
 # Major Tasks to be accomplished for complete splunk install.
 
-- [x] Define Requirements for Splunk Deployment (Type of environment, data retention, applications, what you want ingested, etc)
+- [ ] Define Requirements for Splunk Deployment (Type of environment, data retention, applications, what you want ingested, etc)
 - [ ] Define Hardware requirements (OS, How many CPUs, how much RAM, type of partitions, what to allocate)
 - [ ] Ensure you have Tools for access (Putty, MobaXTerm, winscp, remote desktop, ssh, etc)
 - [ ] Create Active Directory groups
