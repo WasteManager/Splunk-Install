@@ -24,6 +24,12 @@
   - shcluster/apps in deploymon(deployer) is the location you want to put apps you want to push out to search head cluster
      members
   - To rolling restart from search head cluster captain: as splunk in the /bin dir: ./splunk rolling-restart shcluster-members
+  - to show shcluster status from search head captain: ./splunk show shcluster-status
+  - to show cluster status: ./splunk show cluster-bundle-status
+  - after making changes in cluster manager, apply cluster bundle via cmd line. ./splunk apply cluster-bundle
+  -  to move files from one server to another from cmd line: scp -r filname splunkadmin(the servers admin account)@ipaddress:/(location where you want it sent). ie: scp -r frogfile.config splunkadmin@22.9.123.43:/tmp
+  -  creating a new serverclass will push app changes out to search heads, if not you can manually push it using this cmd: splunk reload deploy-server
+  -  on deployment
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
@@ -86,9 +92,9 @@
   - mode=peer
   - pass4symm = the pass4sym established by the cluster manager
   # Cluster Manager Base configs
-  - winscp cluster_manager_base and org_all_indexes to server
+  - winscp cluster_manager_base and org_all_indexes to cluster manager server in manager-apps
   - change ownership and rename to something appropiate
-  - in org_all_indexes inside of indexes.conf change homepath to volume:hot/xindex/db # this needs to be done globally. theres a shortcut to do this in vi (enter that here) (do I need to change the coldpath to volume:cold?)
+  - in org_all_indexes inside of indexes.conf change homepath to volume:hot/xindex/db # this needs to be done globally. theres a shortcut to do this in vi (colon %s/string you want changed/thing you want string changed to/g # :%s/frogsarelame/frogsarecool/g) (do I need to change the coldpath to volume:cold?)
   - move org_all_indexes to manager-apps. ie: mv org_all_indexes
   - in cluster_manager_base, traverse down into server.conf. in the [clustering] stanza ensure mode = manager, replication factor =3 and search factor =2 (this is deployment dependent). define pass4symmkey here. (update keepass)
 
@@ -168,12 +174,31 @@
 - restart
 - There is a base config with that stanza, org_cluster_search_base (alternativey you can move this into apps, and edit like above)
 # add things on deployment server that need to be pushed out to non clustered splunk servers (cluster manager, license manager, deployer)
+# encrypt all servers 
+  - (looking for 2 certs in /opt/etc/auth/mycert[this must be created manually] CACertificate.pem and SplnkServerCertificate.pem. These will be generated using the Certinstall .md. It does not matter where you generate .pem(in regards to which server), then scp the generated .pem files to all servers.
+# set up license manager as search peer (for license admin purposes)
 # Check ulimits on each server
 # check again that transparent huge pages were disabled on all spl servers
 # Deployment server 
 - in opt/splunk/apps/splunkdeploymentserverconfig, create local dir, cp outputs.conf into new local dir, edit it to indexandforward
-# certs on the search head
+- # need org_all_search_volumes on each search head whether its a clustered member or non-clustered
 # set up monitoring console
-# LDAP single sign on
+  - login UI
+  - go to monitoring console
+  - know index cluster names and search head cluster name (jcluster shcluster01 )
+  - add all instances of search peers: (list of all peers) to distributed search (add search peers) in the monitoring console server (NOT clustered INDEXES) search heads, deployer, deployment server, license manager, clsuter manager
+  - mon console -> settings -> general setup -> mode : distributed, save
+  - confirm following: ensure unqiue values are show in each column (ie: server roles, edit these to match their intended roles)
+  - GO to cluster manager and add deployment monitor to search peer (in distributed search from the UI)
+  - *figure out how to maintain persistence in server settings in monitoring console after restart*
+
+*Indexers are currently built to only have 32gigs of ram, docs said I needed 64*
+# SAML setup 
+- 
 # Forwarders deployed
 # work on load balancer 1st to work on regarding certs
+
+service-worldview
+# all servers that are not a license manager gets a new app called org_all_license_servers
+
+# need props of search heads
