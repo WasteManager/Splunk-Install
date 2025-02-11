@@ -32,6 +32,8 @@
   -  on deployment
   -  to remove an app from an deployment use the gui in deployment server. unselect, save.
   -  if after pushing out forwarder, and you tail the log and you get an error that says something along the lines of "splunk destroying tcpoutclient during shutdown/reload"(this is found in info NOT in error), go to your deployment server. Look for a [tcpout:primary_indexer] and find forceTimebasedautoLB. Comment this out.
+  -  When adding apps that need new indexes, go to cluster manager(backend), into manager apps, manually add index definition to org_all_indexes(this is a base config). You can copy and past from an older index like [os] or [windows] just replace the name with whatever you want the app to send its data too
+  -  Add new apps(TAs) to deployment server(only need inputs.conf THATS IT), deployer, Cluster manager
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
