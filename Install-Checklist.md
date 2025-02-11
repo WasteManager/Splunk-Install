@@ -9,12 +9,13 @@
 - [ ] Install Splunk on all Servers
 - [ ] Install HaProxy on load balancer (IF needed)
 - [ ] Set up Cluster Manager
+- [ ] Web UI encryption
 - [ ] Set up Indexers
 - [ ] Set up Search Heads
 - [ ] Set up License Manager
 - [ ] Set up Deployment Server
 - [ ] Set up Deployer
 - [ ] Set up Monitoring Console
-- [ ] Set up login and authentication (SAML/LDAP)
+- [ ] Set up login and authentication (SAML/LDAP/manually add user accounts)
 - [ ] Push out forwarders
 - [ ] Create Dashboards
