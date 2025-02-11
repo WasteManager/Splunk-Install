@@ -31,7 +31,7 @@
   -  creating a new serverclass will push app changes out to search heads, if not you can manually push it using this cmd: splunk reload deploy-server
   -  on deployment
   -  to remove an app from an deployment use the gui in deployment server. unselect, save.
-  -  
+  -  if after pushing out forwarder, and you tail the log and you get an error that says something along the lines of destroying tcpProcess, go to your deployment server. Look for a [tcpout:primary_indexer] and find forceTimebasedautoLB. Comment this out.
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
