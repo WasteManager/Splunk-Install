@@ -205,6 +205,11 @@
 # setting up webUI certs on search heads (where you want users to access via UI)
 - move base config org_all_search_base to deployer inside of /opt/splunk/etc/shcluster/apps
 - delete all other configs aside from web.conf
+- edit web.conf change privkeypath to privkeyPath = /opt/splunk/etc/auth/mycerts/splunkPrivKeyWebUI.key, serverCert = /opt/splunk/etc/auth/mycerts/splunkwebUI.pem
 - uncomment out useSSL
 - deploy out to search heads (wait)
-- 
+- You may need to generate some certs and have them signed by CA (give sysadmins )
+- openssl genersa -aes256-out splunkPrivateKey.key 2048
+- openssl -new -key splunkPrivateKey.key -out splunk.csr (give this one to sysadmins to sign)
+- decrypt the splunkPrivateKey.key -> openssl rsa -in splunkPrivateKey.key -out splunkPrivKeywebUI.key
+- use the san.cnf file to generate csr: openssl req -newkey rsa:2048 -keyout splunkwebUI.key -out splunkwebUI.csr -config san.cnf (give THIS to sysadmin, ensure you edit the san.cnf(the fqdn) file before you generate the csr)
