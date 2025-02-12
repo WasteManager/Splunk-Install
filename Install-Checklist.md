@@ -16,6 +16,8 @@
 - [ ] Set up Deployment Server
 - [ ] Set up Deployer
 - [ ] Set up Monitoring Console
+- [ ] Certs on each server
+- [ ] Web UI encryption 
 - [ ] Set up login and authentication (SAML/LDAP/manually add user accounts)
 - [ ] Push out forwarders
 - [ ] Create Dashboards
