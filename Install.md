@@ -35,6 +35,9 @@
   -  When adding apps that need new indexes, go to cluster manager(backend), into manager apps, manually add index definition to org_all_indexes(this is a base config). You can copy and past from an older index like [os] or [windows] just replace the name with whatever you want the app to send its data too
   -  Add new apps(TAs) to deployment server(only need inputs.conf THATS IT), deployer, Cluster manager
   -  apply shcluster changes to search heads from deploy: ./splunk apply shcluster-bundle -target https://ipofshcpatain:8089
+  -  To check whether or not hot bucket replication is occuring on indexes: Go onto the backend of INDEXER, cd /hot, contained within are the indexes, traverse into the /db/ then ls -l, this will show up the dates that a hot bucket is being created and rolled over
+  -  ONCE data starts coming in(production level volume): adjust the follows config lines found in org_all_indexes in a each individual index: maxHOTBuckets(this is hot to warm), maxHotSpanSecs(probably okay), maxWarmDBCount(warm to cold), coldPath.maxDataSize(cold to frozen), frozenTimePeriodInSecs(), maxTotalDataSizeMB(overrides everything, if data exceeds this size, it will start sending data to frozen)
+  -  
 # Best case run
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
@@ -198,16 +201,10 @@
   - *figure out how to maintain persistence in server settings in monitoring console after restart*
 
 *Indexers are currently built to only have 32gigs of ram, docs said I needed 64*
-# SAML setup 
+
+# setting up webUI certs on search heads (where you want users to access via UI)
+- move base config org_all_search_base to deployer inside of /opt/splunk/etc/shcluster/apps
+- delete all other configs aside from web.conf
+- uncomment out useSSL
+- deploy out to search heads (wait)
 - 
-# Forwarders deployed
-# work on load balancer 1st to work on regarding certs
-
-# all servers that are not a license manager gets a new app called org_all_license_servers
-
-# configure forwarder to use splunks generated certs on the forwarders via overwriting the outputs.conf(this can be found in a custom "app" created in the GUI on the deployment server)
-# the indexer lookups error disappeared
-# need props.conf on the deployer to push out to search heads
-
-# Setup HA proxy on load balancer
-  -
