@@ -218,3 +218,7 @@
 - openssl -new -key splunkPrivateKey.key -out splunk.csr (give this one to sysadmins to sign)
 - decrypt the splunkPrivateKey.key -> openssl rsa -in splunkPrivateKey.key -out splunkPrivKeywebUI.key
 - use the san.cnf file to generate csr: openssl req -newkey rsa:2048 -keyout splunkwebUI.key -out splunkwebUI.csr -config san.cnf (give THIS to sysadmin, ensure you edit the san.cnf(the fqdn) file before you generate the csr)
+
+# Useful spl queries
+| dbinspect index= whateverindexyouarecuriousabout
+
