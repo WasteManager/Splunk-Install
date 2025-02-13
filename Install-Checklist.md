@@ -9,7 +9,6 @@
 - [ ] Install Splunk on all Servers
 - [ ] Install HaProxy on load balancer (IF needed)
 - [ ] Set up Cluster Manager
-- [ ] Web UI encryption
 - [ ] Set up Indexers
 - [ ] Set up Search Heads
 - [ ] Set up License Manager
@@ -17,7 +16,11 @@
 - [ ] Set up Deployer
 - [ ] Set up Monitoring Console
 - [ ] Certs on each server
-- [ ] Web UI encryption 
+- [ ] Web UI encryption
+- [ ] Cooridinate with ADFS (If needed)
 - [ ] Set up login and authentication (SAML/LDAP/manually add user accounts)
+- [ ] Create associated indexes on Cluster manager base config
 - [ ] Push out forwarders
+- [ ] Create Serverclasses
+- [ ] Push Apps down to clients
 - [ ] Create Dashboards
