@@ -1,0 +1,4 @@
+- scp(using winscp) the entire folder directly into the machine you want the app in (ie: the licensemanager)
+- change ownership -> mv the entire folder down into /opt/splunk/etc/apps
+- Ensure you have made whatever changes you need to make in the configs before you move it into apps
+- do a restart
