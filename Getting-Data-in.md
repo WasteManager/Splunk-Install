@@ -7,3 +7,4 @@
 - On the deployment Server backend, under /opt/splunk/etc/deployment-apps | This is where you put whatever apps you want pushed out via the splunk forwarders you have installed on clients. Use winscp or whatever tools needed to get the apps there.
 - Ensure permissions are correct!
 - on the Deployment Server web UI, ensure after installation of the apps that enable app, and Restart Splunk are selected. (Via edit)
+- **For example: with the TA_Windows app we have deployed via deployment server, we are defining the indexes in both the cluster manager in org_all_indexes at the very bottom, and on the deployment server in the TA_windows app in deployment_apps, under inputs**
