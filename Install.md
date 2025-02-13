@@ -40,8 +40,10 @@
   -  Configure frozen path: On the cluster manager, org_all_indexes:define the frozenTimePeriodInSecs on all indexes
   -  check maxWarmDBCOUNT, maxHotBuckets, maxHotSpanSecs on indexer using btool
   -  btool search example: (as user: splunk) ~/bin/splunk btool indexes --debug list | grep frozenTimePeriodInSecs
+  -  if on the deployment server in forwarder management you are seeing alot of error and problems try moving phonehome up to 10 minutes (currently at 5 minutes)
   -  
-# Best case run
+  -  
+# Installing Splunk on built out RHEL Machine
   - turn on machine
   - Use winscp to move splunk rpm to splunk machine
   - chmod 644 splunk-___.rpm
