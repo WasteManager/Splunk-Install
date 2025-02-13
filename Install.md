@@ -37,8 +37,9 @@
   -  apply shcluster changes to search heads from deploy: ./splunk apply shcluster-bundle -target https://ipofshcpatain:8089
   -  To check whether or not hot bucket replication is occuring on indexes: Go onto the backend of INDEXER, cd /hot, contained within are the indexes, traverse into the /db/ then ls -l, this will show up the dates that a hot bucket is being created and rolled over
   -  ONCE data starts coming in(production level volume): adjust the follows config lines found in org_all_indexes in a each individual index: maxHOTBuckets(this is hot to warm), maxHotSpanSecs(probably okay), maxWarmDBCount(warm to cold), coldPath.maxDataSize(cold to frozen), frozenTimePeriodInSecs(), maxTotalDataSizeMB(overrides everything, if data exceeds this size, it will start sending data to frozen)
-  -  On the cluster manager, define the frozenTimePeriodInSecs on all indexes
+  -  Configure frozen path: On the cluster manager, org_all_indexes:define the frozenTimePeriodInSecs on all indexes
   -  check maxWarmDBCOUNT, maxHotBuckets, maxHotSpanSecs on indexer using btool
+  -  btool search example: (as user: splunk) ~/bin/splunk btool indexes --debug list | grep frozenTimePeriodInSecs
   -  
 # Best case run
   - turn on machine
