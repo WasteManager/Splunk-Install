@@ -1,4 +1,4 @@
-# On a linux machine, the load balancer will user the service HAproxy for load balancing
+# On a linux machine, the load balancer will use the service HAproxy for load balancing
 - traverse to /etc/haproxy
 - create a CAcert via this command: openssl req -new -newkey rsa:2048 -nodes -keyout mykey.key -out myrequest.csr
 - send that .csr to system admin to sign with CA. you will get a .cer in return
