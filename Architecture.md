@@ -107,4 +107,10 @@ To ensure the best experience, see [Splunk Enterprise service limits and constra
         - RAM - 16 GiB
         - Data Disks: 2 -4096 GiB
 
-# 
+# BLUFF how the hell this thing works
+  - Cluster Manager -> pushes changes down to clustered indexers
+  - Deployer -> pushes changes down to clustered search heads
+  - Deployment server -> pushes changes down to forwarders, also pushes data down into indexes
+  - Search heads -> recieves indexed data from indexes, users perform searches on here
+  - License Manager -> provides licensing information for all servers in a deployment
+  - 
