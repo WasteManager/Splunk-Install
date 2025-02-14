@@ -4,10 +4,15 @@ https://www.youtube.com/watch?v=vI7466EwG7I
 
 Basically the steps are: Create the directory /opt/splunk/etc/auth/mycerts and cd to it...
 Create the private key (generate using RSA)
+ 
 ~/bin/splunk cmd openssl genrsa -aes256 -out CAPrivateKey.key 2048
+
 ~/bin/splunk cmd openssl req -new -key CAPrivateKey.key -out CACertificate.csr
+
 enter all of the required information (such as the password)
+
 Create the .pem file from the csr file
+
 ~/bin/splunk cmd openssl x509 -req -in CACertificate.csr -sha512 -signkey CAPrivateKey.key -CAcreateserial -out CaCertificate.pem -days 1095
 There are now 3 files CaCertificate.csr CAPrivateKey.key and CaCertificate.pem
 The CACertificate.pem is the most important file that we are working with
