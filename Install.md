@@ -13,9 +13,9 @@
   - ./splunk show shcluster-status (shows if searchhead cluster is up, shows which is captain)
   - to uninstall splunk on rhel: yum remove splunk (ensure that /opt/splunk is removed, if not rm -rf /splunk
   - org_all_deployment_client default phone home time is 600 seconds(will be changed after universal forwarders are enabled) may take about 10 minutes for the client to show up on the deployment server
-  - as splunk: ./splunk clean kvstore --local #clean kvstore
+  - ./splunk clean kvstore --local #clean kvstore
   - ./splunk show kvstore-status #show kvstore status
-  - check logs: move to /opt/splunk/var/log -> tail -f splunkd.log
+  - check logs: move to /opt/splunk/var/log -> tail -f /opt/splunk/var/log/splunk/splunkd.log
   - apps like TA-windows will be deployed from the deployment server(depser)
   - in deployment server, under forwarder management, all hosts will appear under the clients tab
   - never edit apps from GUI, always edit from command line. But you can add server_classes
@@ -50,7 +50,7 @@
   - chmod +x splunk-___.rpm
   - sudo -s
   - rpm -i splunk-___.rpm
-  - su - splunk (turn splunk on and off as splunk user)
+  - su - splunk 
   - cd /opt/splunk/bin
   - ./splunk start --accept-license --answer-yes
       -   - Will be prompted to create a local admin account: use admin and easy to remember password(update keepass!!)
@@ -68,8 +68,8 @@
   - firewall-cmd --zone=public --add-port=8089/tcp --permanent (or use ^8000^8089)
   - firewall-cmd --zone=public --add-port=9997/tcp --permanent (or use ^8089^9997)
   - firewall-cmd --zone=public --add-port=9100/tcp --permanent #9100 being used for replication port for indexers
-  - firewall-cmd --zone=public --add-port=9200/tcp --permanent #Replication across search heads only)
-  - firewall-cmd --zone=public --add-port=8191/tcp --permanent (critical for kvstore[where clusterd knowledged objects to replicated too])
+  - firewall-cmd --zone=public --add-port=9200/tcp --permanent #(Replication across search heads only)
+  - firewall-cmd --zone=public --add-port=8191/tcp --permanent #(critical for kvstore[where clusterd knowledged objects to replicated too])
   - firewall-cmd --reload #rereads to make what a change, (puts things in effect)
 
   # Set up Cluster Manager
@@ -158,12 +158,6 @@
   -  move to /opt/splunk/bin
   -  ./splunk show kvstore-status
   -  kvstore MUST have status as ready
-# Configure load balancer
-  - login as root
-  - install HA proxy
-  - dig into /etc/haproxy
-  - vi haproxy.cg
-  - edit main frontend which proxys to the backends
 
 # Base Configs needed per Server
 - Deployment Server: org_all_forwarder_outputs, org_cluster_search_base, org_full_license_server -> into /opt/splunk/etc/apps
@@ -190,7 +184,6 @@
 # encrypt all servers 
   - (looking for 2 certs in /opt/etc/auth/mycert[this must be created manually] CACertificate.pem and SplnkServerCertificate.pem. These will be generated using the Certinstall .md. It does not matter where you generate .pem(in regards to which server), then scp the generated .pem files to all servers.
 # set up license manager as search peer (for license admin purposes)
-# Check ulimits on each server
 # check again that transparent huge pages were disabled on all spl servers
 # Deployment server 
 - in opt/splunk/apps/splunkdeploymentserverconfig, create local dir, cp outputs.conf into new local dir, edit it to indexandforward
@@ -204,8 +197,6 @@
   - confirm following: ensure unqiue values are show in each column (ie: server roles, edit these to match their intended roles)
   - GO to cluster manager and add deployment monitor to search peer (in distributed search from the UI)
   - *figure out how to maintain persistence in server settings in monitoring console after restart*
-
-*Indexers are currently built to only have 32gigs of ram, docs said I needed 64*
 
 # setting up webUI certs on search heads (where you want users to access via UI)
 - move base config org_all_search_base to deployer inside of /opt/splunk/etc/shcluster/apps
