@@ -100,10 +100,10 @@
 sudo firewall-cmd --zone=public --add-port=8000/tcp --permanent
 sudo firewall-cmd --zone=public --add-port=8089/tcp --permanent
 sudo firewall-cmd --zone=public --add-port=9997/tcp --permanent
-sudo firewall-cmd --zone=public --add-port=9100/tcp --permanent  # Replication port for indexers
-sudo firewall-cmd --zone=public --add-port=9200/tcp --permanent  # Replication across search heads
-sudo firewall-cmd --zone=public --add-port=8191/tcp --permanent  # KV Store communication
-sudo firewall-cmd --reload  # Apply changes
+sudo firewall-cmd --zone=public --add-port=9100/tcp --permanent   (Replication port for indexers)
+sudo firewall-cmd --zone=public --add-port=9200/tcp --permanent  ( Replication across search heads)
+sudo firewall-cmd --zone=public --add-port=8191/tcp --permanent   (KV Store communication)
+sudo firewall-cmd --reload   (Apply changes)
 ```
 
 ---
