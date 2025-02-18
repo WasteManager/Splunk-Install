@@ -159,14 +159,6 @@
   -  ./splunk show kvstore-status
   -  kvstore MUST have status as ready
 
-# Base Configs needed per Server
-- Deployment Server: org_all_forwarder_outputs, org_cluster_search_base, org_full_license_server -> into /opt/splunk/etc/apps
-- License Manager: org_all_deployment_client, org_all_forwarder_outputs -> opt/splunk/etc/apps
-- Deployer: org_all_forwarder_outputs -> org_all_deployment_client -> /opt/splunk/etc/apps, org_full_license_server -> /opt/splunk/etc/deployment-apps
-- cluster manager: org_all_deployment_client, org_all_forwarder_outputs, org_full_license_server, j_cluster_manager_base -> /opt/splunk/etc/apps
-- indexers: j_cluster_indexer_base, j_indexer_volume_indexes -> /opt/splunk/etc/apps
-- search heads: org_all_forwarder_outputs, org_search_volume_indexes -> /opt/splunk/etc/apps
-
 # Base config tidbits
 - org_indexer_volume_indexes :defines hot and cold paths. use ls -l /hot to ensure buckets are filling and are replicating
 - org_cluster_indexer_base: defines pass4symm key to talk to cluster manager, and defines where the license manager lives
@@ -180,14 +172,10 @@
 - :wq
 - restart
 - There is a base config with that stanza, org_cluster_search_base (alternativey you can move this into apps, and edit like above)
-# add things on deployment server that need to be pushed out to non clustered splunk servers (cluster manager, license manager, deployer)
 # encrypt all servers 
   - (looking for 2 certs in /opt/etc/auth/mycert[this must be created manually] CACertificate.pem and SplnkServerCertificate.pem. These will be generated using the Certinstall .md. It does not matter where you generate .pem(in regards to which server), then scp the generated .pem files to all servers.
-# set up license manager as search peer (for license admin purposes)
-# check again that transparent huge pages were disabled on all spl servers
 # Deployment server 
 - in opt/splunk/apps/splunkdeploymentserverconfig, create local dir, cp outputs.conf into new local dir, edit it to indexandforward
-- # need org_all_search_volumes on each search head whether its a clustered member or non-clustered
 # set up monitoring console
   - login UI
   - go to monitoring console
