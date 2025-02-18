@@ -41,7 +41,7 @@
   -  check maxWarmDBCOUNT, maxHotBuckets, maxHotSpanSecs on indexer using btool
   -  btool search example: (as user: splunk) ~/bin/splunk btool indexes --debug list | grep frozenTimePeriodInSecs
   -  if on the deployment server in forwarder management you are seeing alot of error and problems try moving phonehome up to 10 minutes (currently at 5 minutes)
-  -  
+  -  Whenever scp'ing a file that contains a pass4symm key between servers, ensure to manually change the encrypted pass4symmkey to the plaintext version of that password on the new server. (it will re-encrypt on restart)
   -  
 # Installing Splunk on built out RHEL Machine
   - turn on machine
