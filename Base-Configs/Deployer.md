@@ -1,1 +1,5 @@
-# Base Config files Needed | Location for install | Purpose | Config Changes:
+# Base Config files Needed | Location for install |  Config Changes:
+- org_all_deploymentclient | /opt/splunk/etc/apps | deploymentclient.conf(phoneHomeIntervalInSecs, [target-broker:deploymentServer] targetURI = ipandport of deployment server)
+- org_all_forwarder_outputs | /opt/splunk/etc/apps | outputs.conf([tcpout:primary_indexers] server = ipOfIndexer:port, ipOfIndexer2:port, ipOIndexer3:port | [tcpout-server://ipOfIndexer1:port] sslCertPath = /opt/splunk/etc/auth/mycerts/SSLCERT.pem, sslPassword = passwordForSSLCERT.pem,[tcpout-server://ipOfIndexer2:port] sslCertPath = /opt/splunk/etc/auth/mycerts/SSLCERT.pem, sslPassword = passwordForSSLCERT.pem,[tcpout-server://ipOfIndexer3:port] sslCertPath = /opt/splunk/etc/auth/mycerts/SSLCERT.pem, sslPassword = passwordForSSLCERT.pem)
+- org_full_license_server | /opt/splunk/etc/apps | server.conf([license] manager_uri: https://ipoflicensemanager:managementport)
+- org_search_volume_indexes | /opt/splunk/etc/apps | indexes.conf([volume:hot]path = /hot, [volume:cold] path = /cold)
