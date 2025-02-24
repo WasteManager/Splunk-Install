@@ -1,2 +1,2 @@
 # Splunk-Rebuild
-Design considerations for NIPR Splunk Rebuild
+General design considerations for Building a Splunk Deployment
