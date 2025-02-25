@@ -88,24 +88,46 @@ To ensure the best experience, see [Splunk Enterprise service limits and constra
 # Backend Configurations
 - Linux backend
 - RHel 9
-- STIGs?
-- Hosted on-prem?
-- Hardware requirements?
+- Hardware requirements
     - Search Heads
-        - vCPU's - 8
-        - RAM -32 GiB
-        - OS disk -32GiB
-        - Data Disks: 2- 512GiB
+        - CPU's - 16
+        - RAM -32 GB
+        - OS disk -32GB
+        - Storage 512GiB
+        - XFS
+        - /opt 250GB
+        - Cyber Search Head /opt 500GB
     - Indexers
-        - vCPU's - 16
+        - CPU's - 24
         - RAM - 64GiB
         - OS disk -32GiB
-        - Data Disks: 3 -30000 GiB
+        - Storage: 14TB
+        - /opt 150GB
+        - /Cold 11TB
+        - /Frozen 24TB
     - Cluster Manager
-        - vCPU's - 4
-        - OS disk -32GiB
-        - RAM - 16 GiB
-        - Data Disks: 2 -4096 GiB
+        - CPU's - 16
+        - OS disk -32GB
+        - RAM - 16 GB
+        - Storage - 4096 GB
+    - Deployer/Monitoring Console
+    -   - CPU's - 16
+        - RAM - 16GB
+        - OS Disk: 32GB
+        - Storage 512GB
+        - /opt 150 GB
+    - License Manager
+        - CPU's - 16
+        - RAM - 16GB
+        - OS Disk: 32GB
+        - Storage 512GB
+        - /opt 150 GB
+  - Load Balancer
+        - CPU's - 16
+        - RAM - 16GB
+        - OS Disk: 32GB
+        - Storage 512GB
+        - /opt 150 GB
 
 # BLUFF how the hell this thing works
   - Cluster Manager -> pushes changes down to clustered indexers
