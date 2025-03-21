@@ -200,3 +200,6 @@
 
 # Useful spl queries
 | dbinspect index= whateverindexyouarecuriousabout
+
+# To bypass SAML via URL
+  - http://splunkblah.blah.blah.mil:8000/en-us/account/login?loginType=Splunk
