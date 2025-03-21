@@ -203,3 +203,6 @@
 
 # To bypass SAML via URL
   - http://splunkblah.blah.blah.mil:8000/en-us/account/login?loginType=Splunk
+
+# TO change ownership of a file to splunk
+  - chown splunk:splunk blah.file
