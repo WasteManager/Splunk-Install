@@ -206,3 +206,15 @@
 
 # TO change ownership of a file to splunk
   - chown splunk:splunk blah.file
+
+# regex for netflow
+transforms.conf #netflow
+[netflow_field_extractions]
+REGEX = (\d+)\s+(\d+\.\d+\.\d+\.\d+)\s+(\d+)\s+(\d+\.\d+\.\d+\.\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)
+FORMAT = flow_version::$1 src_ip::$2 src_port::$3 dest_ip::$4 dest_port::$5 packets::$6 bytes::$7 uptime::$8
+
+# regex for syslog
+transforms.conf # for syslog
+[syslog_field_extractions]
+REGEX = ^<\d+>(\w{3}\s+\d+\s\d+:\d+:\d+)\s+([^\s]+)\s+(.*)$
+FORMAT = timestamp::$1 host::$2 message::$3
