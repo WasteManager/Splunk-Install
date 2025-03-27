@@ -111,5 +111,9 @@ index=windows_logs sourcetype="WinEventLog"
 | eventstats avg(count) AS avg_count, stdev(count) AS stdev_count
 | where count > avg_count + (2 * stdev_count)
 
+# Situation: Some windows are not sending security logs, and you need to generate a list
+  - Ensure that: search date is far enough back, forwarder is correctly installed and configs are correct, ensure the correct app is installed on the machine
+  - Initiate the following query
+| tstats count where index=windows by host | rename host as all_host | eval has_security=0 | append [ | tstats count where index=windows source=xmlWinEventLog:Security by host | eval has_security=1 | rename host as all_host  | stats max(has_security) as has_security by all_host | has_security=0 | rename all_host as host
 
 
