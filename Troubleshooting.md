@@ -1,0 +1,13 @@
+# Various Troubleshooting scenarios
+  - Problem: Spl forwarder installed on windows machines, collecting wineventlogs. Some machines are sending all wineventlogs except security logs
+  - Run a few queries such as -> index=_intenrnal host=problemmachine (checking to see if event internal logs are being collected)
+  - index=_internal sourcetype=splunkd host=problemmachine series=xmlwineventlogs*
+  - index=_inteneral sourcetype=splunkd host=problemmachine Splunk_TA_windows error
+  - Nav to machine that is having problems and open powershell
+  - net stop splunkforwarder
+  - net start splunkforwarder
+  - Get-WmiObject -Class Win32_Service -Filter "Name='SplunkForwarder'" | Select-Object Name, StartName
+  - whoami /priv
+  - check to see what kind of service splunkforwarder is
+  - check and see what privs it has
+  - Check Group Policy (This is likely it)
