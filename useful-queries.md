@@ -111,6 +111,80 @@ index=windows_logs sourcetype="WinEventLog"
 | eventstats avg(count) AS avg_count, stdev(count) AS stdev_count
 | where count > avg_count + (2 * stdev_count)
 
+- Embedded powershell in command line
+
+index=windows sourcetype=WinEventLog:Security EventCode=4688
+| search Command_Line="*powershell*"
+| search Command_Line="*-enc*" OR Command_Line="*-e *"
+| stats count by Account_Name, Command_Line
+
+ - Executable files embedded /temp
+   
+index=windows EventCode=4663 Object_Name="*\\Temp\\*.exe"
+| stats count by Account_Name, Object_Name, host
+
+ - powershell Command execution
+   
+index=windows sourcetype=WinEventLog:Security EventCode=4688
+| where Process_Name="powershell.exe"
+| stats count by Account_Name, Command_Line, host
+
+ - Connection to malicious IP's
+   
+index=network OR index=firewall
+[ | inputlookup threat_intel.csv | fields ip | rename ip as dest_ip ]
+| stats count by src_ip, dest_ip, dest_port
+
+ - Most bandwidth used
+   
+index=netflow OR index=network
+| stats sum(bytes_in) as BytesIn, sum(bytes_out) as BytesOut by src_ip
+| eval TotalBytes = BytesIn + BytesOut
+| sort -TotalBytes
+
+ - Unusual ports accessed
+   
+index=network OR index=firewall
+| stats count by dest_port
+| sort -count
+| where dest_port > 1024
+
+ - Succesful logins after failures (potential brute force)
+   
+(index=windows EventCode=4624 OR EventCode=4625)
+| stats values(EventCode) as Events by Account_Name, host, Source_Network_Address
+| search Events="4624" AND Events="4625"
+
+ - Failed logins by user
+   
+index=windows EventCode=4625
+| stats count by Account_Name, host, Source_Network_Address
+| sort -count
+
+ - What Splunk Users are search
+   
+index=_audit action=search info=granted
+| table _time user search info
+| sort -_time
+
+ - Splunk Role and Permission changes
+   
+index=_audit action=edit_user
+| table _time user action info
+| sort -_time
+
+ - Long or expensive Search Monitoring
+   
+index=_internal sourcetype=scheduler
+| stats avg(run_time) as avg_runtime, max(run_time) as max_runtime by user savedsearch_name
+| where avg_runtime > 5000
+
+ - Splunk Login attempts
+   
+index=_audit action="login attempt"
+| stats count by user, info, src, _time
+| sort -_time
+
 # Situation: Some windows are not sending security logs, and you need to generate a list
   - Ensure that: search date is far enough back, forwarder is correctly installed and configs are correct, ensure the correct app is installed on the machine
   - Initiate the following query
