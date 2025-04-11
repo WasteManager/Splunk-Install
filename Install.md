@@ -218,3 +218,8 @@ transforms.conf # for syslog
 [syslog_field_extractions]
 REGEX = ^<\d+>(\w{3}\s+\d+\s\d+:\d+:\d+)\s+([^\s]+)\s+(.*)$
 FORMAT = timestamp::$1 host::$2 message::$3
+
+
+# Notes regarding Heavy Forwarder
+  - Does not need /cold and /frozen storage.
+  - Can be provisioned light since nothing is being stored locally
