@@ -367,4 +367,54 @@ index=windows sourcetype="WinEventLog:Security" (EventCode=4728 OR EventCode=472
   - Initiate the following query
 | tstats count where index=windows by host | rename host as all_host | eval has_security=0 | append [ | tstats count where index=windows source=xmlWinEventLog:Security by host | eval has_security=1 | rename host as all_host  | stats max(has_security) as has_security by all_host | has_security=0 | rename all_host as host
 
+# Dashboard for Service Uptime (Think Exchange or Skype)
+
+ <dashboard>
+  <label>Exchange Server Uptime Monitor</label>
+  <row>
+    <panel>
+      <title>Exchange Server Log Activity (Uptime)</title>
+      <table>
+        <search>
+          <query>
+            index=windows host="EXCH*" OR source=*Exchange*
+            | stats latest(_time) as last_seen_epoch by host
+            | eval last_seen=strftime(last_seen_epoch, "%Y-%m-%d %H:%M:%S")
+            | eval age = now() - last_seen_epoch
+            | eval last_seen_ago = tostring(round(age / 60, 1)) . " min ago"
+            | eval status = if(isnull(last_seen_epoch), "Unknown", if(age > 300, "Down", "Up"))
+            | table host, last_seen, last_seen_ago, age, status
+          </query>
+          <earliest>-1h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <format type="color" field="status">
+          <colorPalette type="expression">
+            <![CDATA[
+              if (value=="Up", "0x28a745", if(value=="Down", "0xdc3545", "0x6c757d"))
+            ]]>
+          </colorPalette>
+        </format>
+      </table>
+    </panel>
+<panel>
+  <title>Exchange Server Annual Uptime %</title>
+  <table>
+    <search>
+      <query>
+        index=windows host="EXCH*" OR source=*Exchange*
+        | bin _time span=1h
+        | stats count by _time, host
+        | eval status = if(count > 0, 1, 0)
+        | eventstats count as total_buckets by host
+        | stats sum(status) as uptime_hours, max(total_buckets) as expected_hours by host
+        | eval uptime_pct = round((uptime_hours / expected_hours) * 100, 2)
+        | table host, uptime_hours, expected_hours, uptime_pct
+      </query>
+      <earliest>-1y@y</earliest>
+      <latest>now</latest>
+    </search>
+  </table>
+</panel>
 
